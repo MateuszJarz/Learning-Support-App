@@ -1,23 +1,20 @@
 package com.example.learningsupportapplication.presentation.screen.home
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.learningsupportapplication.ui.theme.*
+import com.example.learningsupportapplication.R
+import com.example.learningsupportapplication.domain.model.StudyPack
+import com.example.learningsupportapplication.presentation.common.SelectionField
+import com.example.learningsupportapplication.presentation.common.StudyPackList
+import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 
 /*
     * 1. Field with button to create new StudyPack
@@ -31,42 +28,32 @@ import com.example.learningsupportapplication.ui.theme.*
 fun HomeScreen(
     navHostController: NavHostController
 ) {
+
     Column(
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(all = LARGE_PADDING),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         HomeCreateStudyPack()
+        StudyPackList(
+            studyPackages = listOf(
+                StudyPack(id = 1, studyPackName = "test1"),
+                StudyPack(id = 2, studyPackName = "test2")
+            ), navController = navHostController
+        )
     }
 }
 
 @Composable
 fun HomeCreateStudyPack() {
 
-    Surface(
-        shape = RoundedCornerShape(LARGE_PADDING),
-        border = BorderStroke(BORDER_SIZE, Color.Black)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(all = SMALL_PADDING),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-
-        ) {
-            Text(
-                text = "Add new Study Pack!",
-                fontSize = MaterialTheme.typography.subtitle1.fontSize,
-                fontWeight = FontWeight.Bold
-
-            )
-            Button(
-                onClick = { /*TODO*/ }
-            ) {
-                Text(
-                    text = "Add"
-                )
-            }
-        }
-    }
+    SelectionField(
+        titleText = "Add bew Study Pack!",
+        buttonName = stringResource(R.string.create_button)
+    )
 }
 
 @Preview

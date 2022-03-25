@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class StudyPack(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
-    var packageName: String
+    var studyPackName: String
 )

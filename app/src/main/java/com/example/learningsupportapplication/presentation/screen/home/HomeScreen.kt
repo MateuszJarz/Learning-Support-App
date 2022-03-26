@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyPack
+import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.presentation.common.SelectionField
 import com.example.learningsupportapplication.presentation.common.StudyPackList
 import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
@@ -26,7 +27,7 @@ import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 
 @Composable
 fun HomeScreen(
-    navHostController: NavHostController
+    navController: NavHostController
 ) {
 
     Column(
@@ -37,27 +38,27 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        HomeCreateStudyPack()
+        HomeCreateStudyPack(navController = navController)
         StudyPackList(
             studyPackages = listOf(
                 StudyPack(id = 1, studyPackName = "test1"),
                 StudyPack(id = 2, studyPackName = "test2")
-            ), navController = navHostController
+            ), navController = navController
         )
     }
 }
 
 @Composable
-fun HomeCreateStudyPack() {
+fun HomeCreateStudyPack(
+    navController: NavHostController
+) {
 
     SelectionField(
-        titleText = "Add bew Study Pack!",
-        buttonName = stringResource(R.string.create_button)
+        titleText = "Add new Study Pack!",
+        buttonName = stringResource(R.string.create_button),
+        onClick = {
+            navController.navigate(Screen.CreateStudyPack.route)
+        }
     )
 }
 
-@Preview
-@Composable
-fun HomeCreateStudyPackPreview() {
-    HomeCreateStudyPack()
-}

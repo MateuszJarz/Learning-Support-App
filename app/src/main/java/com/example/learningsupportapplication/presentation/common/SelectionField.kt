@@ -21,7 +21,8 @@ import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 @Composable
 fun SelectionField(
     titleText: String,
-    buttonName: String
+    buttonName: String,
+    onClick: () -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -49,7 +50,7 @@ fun SelectionField(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 shape = RoundedCornerShape(SMALL_PADDING),
                 border = BorderStroke(BORDER_SIZE, Color.Black),
-                onClick = { /*TODO*/ }
+                onClick = { onClick() }
             ) {
                 Text(
                     text = buttonName,
@@ -63,5 +64,5 @@ fun SelectionField(
 @Preview
 @Composable
 fun SelectionFieldPreview() {
-    SelectionField("text","test")
+    SelectionField("text","test", onClick = {})
 }

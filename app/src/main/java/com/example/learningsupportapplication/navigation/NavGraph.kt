@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.learningsupportapplication.Constants.DETAILS_ARGUMENT_KEY
+import com.example.learningsupportapplication.presentation.screen.create_process.CreateStudyPack
 import com.example.learningsupportapplication.presentation.screen.home.HomeScreen
 
 @Composable
@@ -22,7 +23,7 @@ fun SetupNavGraph(navController: NavHostController) {
 
         }
         composable(route = Screen.Home.route) {
-            HomeScreen(navHostController = navController)
+            HomeScreen(navController = navController)
         }
 
         // Education Process
@@ -37,7 +38,7 @@ fun SetupNavGraph(navController: NavHostController) {
 
         // Create Process
         composable(route = Screen.CreateStudyPack.route) {
-
+            CreateStudyPack(navController = navController)
         }
         composable(route = Screen.AddNewStudyCard.route) {
 

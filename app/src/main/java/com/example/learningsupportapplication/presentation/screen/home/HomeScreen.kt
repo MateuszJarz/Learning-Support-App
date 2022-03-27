@@ -8,12 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.navigation.Screen
-import com.example.learningsupportapplication.presentation.common.SelectionField
+import com.example.learningsupportapplication.presentation.common.SelectionFieldItem
 import com.example.learningsupportapplication.presentation.common.StudyPackList
 import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 
@@ -53,7 +52,7 @@ fun HomeCreateStudyPack(
     navController: NavHostController
 ) {
 
-    SelectionField(
+    SelectionFieldItem(
         titleText = "Add new Study Pack!",
         buttonName = stringResource(R.string.create_button),
         onClick = {

@@ -1,8 +1,6 @@
 package com.example.learningsupportapplication.presentation.common
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,13 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.ui.theme.BORDER_SIZE
 import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 
 @Composable
-fun SelectionField(
+fun SelectionFieldItem(
     titleText: String,
     buttonName: String,
     onClick: () -> Unit
@@ -31,22 +28,26 @@ fun SelectionField(
         shape = RoundedCornerShape(LARGE_PADDING),
         border = BorderStroke(BORDER_SIZE, Color.Black),
 
-    ) {
+        ) {
         Row(
             modifier = Modifier
                 .padding(all = SMALL_PADDING),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceBetween
 
         ) {
             Text(
-                text = titleText ,
+                modifier = Modifier
+                    .padding(start = SMALL_PADDING),
+                text = titleText,
                 fontSize = MaterialTheme.typography.subtitle1.fontSize,
                 fontWeight = FontWeight.Bold
 
             )
 
             Button(
+                modifier = Modifier
+                    .width(95.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 shape = RoundedCornerShape(SMALL_PADDING),
                 border = BorderStroke(BORDER_SIZE, Color.Black),
@@ -64,5 +65,5 @@ fun SelectionField(
 @Preview
 @Composable
 fun SelectionFieldPreview() {
-    SelectionField("text","test", onClick = {})
+    SelectionFieldItem("text", "test", onClick = {})
 }

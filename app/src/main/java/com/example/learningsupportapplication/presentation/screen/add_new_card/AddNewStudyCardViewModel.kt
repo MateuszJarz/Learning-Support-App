@@ -7,22 +7,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_NAME
 import com.example.learningsupportapplication.domain.model.StudyCard
+import com.example.learningsupportapplication.domain.model.StudyPack
+import com.example.learningsupportapplication.domain.model.StudyPackRelation
+import com.example.learningsupportapplication.domain.use_case.UseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class AddNewStudyCardViewModel @Inject constructor(
+    private val useCase: UseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-     private val _studyCardPageOneText = mutableStateOf("")
-     val studyCardPageOneText = _studyCardPageOneText
+    private val _studyCardPageOneText = mutableStateOf("")
+    val studyCardPageOneText = _studyCardPageOneText
 
     private val _studyCardPageTwoText = mutableStateOf("")
-    val studyCardPageTwoText = _studyCardPageOneText
+    val studyCardPageTwoText = _studyCardPageTwoText
 
     private lateinit var _studyPackName: String
-    private var currentList = mutableListOf<StudyCard>()
+
+    var currentList = mutableListOf<StudyCard>()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,8 +41,8 @@ class AddNewStudyCardViewModel @Inject constructor(
         }
     }
 
-     fun insertCardToCurrentList(firstPage: String, secondPage: String){
-        viewModelScope.launch(Dispatchers.IO){
+    fun insertCardToCurrentList(firstPage: String, secondPage: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             val studyCard = StudyCard(
                 id = 0,
                 idStudyPack = 0,
@@ -43,14 +50,20 @@ class AddNewStudyCardViewModel @Inject constructor(
                 secondPage = secondPage
             )
             currentList.add(studyCard)
-            Log.d("currentList",currentList.size.toString())
-            Log.d("currentList",currentList[0].firstPage)
+            Log.d("currentList", currentList.size.toString())
+            Log.d("currentList", currentList[0].firstPage + " " + currentList[0].secondPage)
         }
 
     }
-     fun insertCardsToDataBase(studyCard: MutableList<StudyCard>){
-        viewModelScope.launch(Dispatchers.IO){
 
+    fun insertCardsToDataBase(studyCard: MutableList<StudyCard>) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val studyPack = StudyPack(0, _studyPackName)
+            useCase.addNewStudyPack(studyPack = studyPack)
+
+            val studyPackRelation = StudyPackRelation(studyPack = studyPack, currentList)
+            useCase.addNewPackWithListOfCards(studyPackRelation = studyPackRelation)
         }
     }
 }

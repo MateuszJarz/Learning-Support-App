@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.learningsupportapplication.Constants.LSA_DATABASE
 import com.example.learningsupportapplication.data.LSADataBase
+import com.example.learningsupportapplication.domain.model.StudyPack
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +29,13 @@ object DataBaseModule {
             //.fallbackToDestructiveMigration()
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideStudyCardDao(lsaDataBase: LSADataBase) = lsaDataBase.studyCardDao()
+
+    @Provides
+    @Singleton
+    fun provideStudyPackDao(lsaDataBase: LSADataBase) = lsaDataBase.studyPackDao()
 }
+

@@ -22,24 +22,35 @@ fun AddNewStudyCard(
     var studyCardPageOneText by addNewStudyCardViewModel.studyCardPageOneText
     var studyCardPageTwoText by addNewStudyCardViewModel.studyCardPageTwoText
 
+    var currentListOfCards = addNewStudyCardViewModel.currentList
+
 
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
         StudyCardSheet(
 
-            text = studyCardPageOneText,
-            onTexChange = {
-                studyCardPageOneText = it
+            pageOneText = studyCardPageOneText,
+            pageOneTextChange = { text1 ->
+                studyCardPageOneText = text1
             },
+
+            pageTwoText = studyCardPageTwoText,
+            pageTwoTextChange = { text2 ->
+                studyCardPageTwoText = text2
+            },
+
             painter = painterResource(id = R.drawable.ic_launcher_background),
 
-            onClick = {
+            onClickAdd = {
                 addNewStudyCardViewModel.insertCardToCurrentList(
                     firstPage = studyCardPageOneText,
                     secondPage = studyCardPageTwoText
                 )
 
+            },
+            onClickCreate = {
+                addNewStudyCardViewModel.insertCardsToDataBase(currentListOfCards)
             }
         )
     }

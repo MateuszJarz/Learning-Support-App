@@ -8,7 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,10 +24,13 @@ import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 
 @Composable
 fun StudyCardSheet(
-    text: String,
-    onTexChange: (String) -> Unit,
+    pageOneText: String,
+    pageTwoText: String,
+    pageOneTextChange: (String) -> Unit,
+    pageTwoTextChange: (String) -> Unit,
     painter: Painter,
-    onClick:() -> Unit
+    onClickAdd: () -> Unit,
+    onClickCreate: () -> Unit
 ) {
 
     Column(
@@ -36,14 +39,18 @@ fun StudyCardSheet(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         CardSheetItem(
-
-            text = text,
-            onTexChange = onTexChange
+            pageOneText = pageOneText,
+            pageTwoText = pageTwoText,
+            pageOneTextChange = pageOneTextChange,
+            pageTwoTextChange = pageTwoTextChange
         )
         PhotoCardItem(
             painter = painter
         )
-        ButtonsCard(onClick =  onClick)
+        ButtonsCard(
+            onClickAdd = onClickAdd,
+            onClickCreate = onClickCreate
+        )
     }
 
 
@@ -51,8 +58,10 @@ fun StudyCardSheet(
 
 @Composable
 fun CardSheetItem(
-    text: String,
-    onTexChange: (String) -> Unit,
+    pageOneText: String,
+    pageTwoText: String,
+    pageOneTextChange: (String) -> Unit,
+    pageTwoTextChange: (String) -> Unit,
 ) {
 
 
@@ -63,15 +72,16 @@ fun CardSheetItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+
         OutlinedTextField(
             modifier = Modifier
                 .width(322.dp)
                 .height(96.dp)
                 .padding(bottom = SMALL_PADDING),
-            value = text,
+            value = pageOneText,
             shape = RoundedCornerShape(SMALL_PADDING),
             onValueChange = {
-                onTexChange(it)
+                pageOneTextChange(it)
             },
             placeholder = {
                 Text(
@@ -80,14 +90,15 @@ fun CardSheetItem(
                 )
             }
         )
-       OutlinedTextField(
+
+        OutlinedTextField(
             modifier = Modifier
                 .width(322.dp)
                 .height(96.dp),
-            value = text,
+            value = pageTwoText,
             shape = RoundedCornerShape(SMALL_PADDING),
             onValueChange = {
-                onTexChange(it)
+                pageTwoTextChange(it)
             },
             placeholder = {
                 Text(
@@ -105,11 +116,11 @@ fun PhotoCardItem(
     painter: Painter
 ) {
 
-
-    Row(
-
-    ) {
-        Image(painter = painter, contentDescription = "Card Image")
+    Row {
+        Image(
+            painter = painter,
+            contentDescription = "Card Image",
+        )
 
         Column(
             horizontalAlignment = Alignment.End
@@ -136,20 +147,35 @@ fun PhotoCardItem(
 
 @Composable
 fun ButtonsCard(
-    onClick:() -> Unit
+    onClickAdd: () -> Unit,
+    onClickCreate: () -> Unit
 ) {
 
-    Row() {
+    Row {
         Button(
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             shape = RoundedCornerShape(SMALL_PADDING),
             border = BorderStroke(BORDER_SIZE, Color.Black),
             onClick = {
-                onClick()
+                onClickAdd()
             }
         ) {
             Text(
                 text = "ADD",
+                color = Color.Black
+            )
+        }
+
+        Button(
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+            shape = RoundedCornerShape(SMALL_PADDING),
+            border = BorderStroke(BORDER_SIZE, Color.Black),
+            onClick = {
+                onClickCreate()
+            }
+        ) {
+            Text(
+                text = "CREATE STUDY PACK",
                 color = Color.Black
             )
         }
@@ -158,11 +184,10 @@ fun ButtonsCard(
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun CardSheetItemPreview() {
-    CardSheetItem(text = "", onTexChange = {})
+
 }
 
 @Preview

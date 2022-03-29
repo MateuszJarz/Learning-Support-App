@@ -1,7 +1,5 @@
 package com.example.learningsupportapplication.presentation.screen.create_study_pack
 
-import android.content.Context
-import android.os.Message
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -17,27 +15,35 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.ui.theme.BORDER_SIZE
 import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
-import kotlinx.serialization.descriptors.PrimitiveKind
 
 
 @Composable
 fun CreateStudyPack(
     navController: NavHostController,
+    createStudyPackViewModel: CreateStudyPackViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    var studyPackName by createStudyPackViewModel.studyPackName
 
     CreateStudyPackItems(
-        onClick = {
-            if (it != ""){
+        studyPackName = studyPackName,
+        onValueChange={ text ->
+            studyPackName = text
+        } ,
+        onClickButton = {
+
+            if (it != "") {
+                createStudyPackViewModel.insertStudyPackToDataBase()
                 navController.navigate(Screen.AddNewStudyCard.passStudyPackName(it))
                 Log.d("StudyPackName", it)
-            }else{
-                Toast.makeText(context,"Wprowadz nazwe pakietu",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Wprowadz nazwe pakietu", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -45,16 +51,14 @@ fun CreateStudyPack(
 
 @Composable
 fun CreateStudyPackItems(
-    onClick: (String) -> Unit,
+     studyPackName: String,
+     onValueChange: (String)-> Unit,
+    onClickButton: (String) -> Unit,
 ) {
 
-    var studyPackName by remember {
-        mutableStateOf(TextFieldValue(""))
-    }
 
-    Scaffold(
 
-    ) {
+    Scaffold {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -73,8 +77,8 @@ fun CreateStudyPackItems(
                     .height(96.dp),
                 value = studyPackName,
                 shape = RoundedCornerShape(SMALL_PADDING),
-                onValueChange = { newText ->
-                    studyPackName = newText
+                onValueChange = {
+                    onValueChange(it)
                 },
                 placeholder = {
                     Text(
@@ -89,7 +93,7 @@ fun CreateStudyPackItems(
                 shape = RoundedCornerShape(SMALL_PADDING),
                 border = BorderStroke(BORDER_SIZE, Color.Black),
                 onClick = {
-                    onClick(studyPackName.text)
+                    onClickButton(studyPackName)
                 }
             ) {
                 Text(
@@ -106,5 +110,5 @@ fun CreateStudyPackItems(
 @Preview
 @Composable
 fun CreateStudyPackItemsPreview() {
-    CreateStudyPackItems(onClick = {})
+    CreateStudyPackItems("", onValueChange = {}, onClickButton = {})
 }

@@ -7,8 +7,8 @@ import com.example.learningsupportapplication.data.local.dao.StudyPackDao
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.model.StudyPack
 
-@Database(entities = [StudyCard::class,StudyPack::class], version = 1)
-abstract class LSADataBase : RoomDatabase(){
-    abstract fun studyCardDao() : StudyCardDao
-    abstract fun studyPackDao() : StudyPackDao
-    }
+@Database(entities = [StudyCard::class, StudyPack::class], version = 1, exportSchema = false)
+abstract class LSADataBase : RoomDatabase() {
+    abstract fun studyCardDao(): StudyCardDao
+    abstract fun studyPackDao(): StudyPackDao
+}

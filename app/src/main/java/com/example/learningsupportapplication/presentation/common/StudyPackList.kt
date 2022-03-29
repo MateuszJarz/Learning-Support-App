@@ -35,7 +35,7 @@ fun StudyPackItem(
     SelectionFieldItem(
         titleText = studyPack.studyPackName,
         buttonName = stringResource(R.string.start_button),
-        onClick = { TODO()}
+        onClick = { TODO() }
     )
 }
 

@@ -3,39 +3,48 @@ package com.example.learningsupportapplication.presentation.screen.add_new_card
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.presentation.common.StudyCardSheet
 
+
 @Composable
 fun AddNewStudyCard(
     navController: NavHostController,
+    addNewStudyCardViewModel: AddNewStudyCardViewModel = hiltViewModel()
 
 ) {
-    var text1 : String = ""
-    var text2 : String = ""
+    var studyCardPageOneText by addNewStudyCardViewModel.studyCardPageOneText
+    var studyCardPageTwoText by addNewStudyCardViewModel.studyCardPageTwoText
 
-    var text3 : String = ""
-    var text4 : String = ""
 
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
         StudyCardSheet(
-            studyCardPageTwo = {
-                text3 = it
-            } ,
-            studyCardPageOneText = text1,
-            studyCardPageOne = {
-                text4 = it
+
+            text = studyCardPageOneText,
+            onTexChange = {
+                studyCardPageOneText = it
             },
-            studyCardPageTwoText = text2,
-            painter = painterResource(id =  R.drawable.ic_launcher_background)
+            painter = painterResource(id = R.drawable.ic_launcher_background),
+
+            onClick = {
+                addNewStudyCardViewModel.insertCardToCurrentList(
+                    firstPage = studyCardPageOneText,
+                    secondPage = studyCardPageTwoText
+                )
+
+            }
         )
     }
 
 
 }
+
+

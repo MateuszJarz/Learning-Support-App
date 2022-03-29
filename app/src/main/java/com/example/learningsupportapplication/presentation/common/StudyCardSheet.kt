@@ -8,7 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,11 +24,10 @@ import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 
 @Composable
 fun StudyCardSheet(
-    studyCardPageOneText: String,
-    studyCardPageTwoText: String,
-    studyCardPageOne: (String) -> Unit,
-    studyCardPageTwo: (String) -> Unit,
-    painter: Painter
+    text: String,
+    onTexChange: (String) -> Unit,
+    painter: Painter,
+    onClick:() -> Unit
 ) {
 
     Column(
@@ -37,15 +36,14 @@ fun StudyCardSheet(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         CardSheetItem(
-            studyCardPageOne = studyCardPageOne,
-            studyCardPageOneText = studyCardPageOneText,
-            studyCardPageTwo = studyCardPageTwo,
-            studyCardPageTwoText = studyCardPageTwoText
+
+            text = text,
+            onTexChange = onTexChange
         )
         PhotoCardItem(
             painter = painter
         )
-        ButtonsCard()
+        ButtonsCard(onClick =  onClick)
     }
 
 
@@ -53,11 +51,10 @@ fun StudyCardSheet(
 
 @Composable
 fun CardSheetItem(
-    studyCardPageOneText: String,
-    studyCardPageTwoText: String,
-    studyCardPageOne: (String) -> Unit,
-    studyCardPageTwo: (String) -> Unit,
+    text: String,
+    onTexChange: (String) -> Unit,
 ) {
+
 
     Column(
         Modifier
@@ -71,10 +68,10 @@ fun CardSheetItem(
                 .width(322.dp)
                 .height(96.dp)
                 .padding(bottom = SMALL_PADDING),
-            value = studyCardPageOneText,
+            value = text,
             shape = RoundedCornerShape(SMALL_PADDING),
             onValueChange = {
-                studyCardPageOne(it)
+                onTexChange(it)
             },
             placeholder = {
                 Text(
@@ -83,14 +80,14 @@ fun CardSheetItem(
                 )
             }
         )
-        OutlinedTextField(
+       OutlinedTextField(
             modifier = Modifier
                 .width(322.dp)
                 .height(96.dp),
-            value = studyCardPageTwoText,
+            value = text,
             shape = RoundedCornerShape(SMALL_PADDING),
             onValueChange = {
-                studyCardPageTwo(it)
+                onTexChange(it)
             },
             placeholder = {
                 Text(
@@ -139,7 +136,7 @@ fun PhotoCardItem(
 
 @Composable
 fun ButtonsCard(
-
+    onClick:() -> Unit
 ) {
 
     Row() {
@@ -148,7 +145,7 @@ fun ButtonsCard(
             shape = RoundedCornerShape(SMALL_PADDING),
             border = BorderStroke(BORDER_SIZE, Color.Black),
             onClick = {
-                TODO()
+                onClick()
             }
         ) {
             Text(
@@ -165,7 +162,7 @@ fun ButtonsCard(
 @Preview(showBackground = true)
 @Composable
 fun CardSheetItemPreview() {
-    CardSheetItem("", "", {}, {})
+    CardSheetItem(text = "", onTexChange = {})
 }
 
 @Preview

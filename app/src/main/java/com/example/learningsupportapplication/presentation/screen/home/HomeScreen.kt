@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyPack
@@ -15,6 +19,9 @@ import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.presentation.common.SelectionFieldItem
 import com.example.learningsupportapplication.presentation.common.StudyPackList
 import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
+import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.launch
+import kotlin.coroutines.coroutineContext
 
 /*
     * 1. Field with button to create new StudyPack
@@ -26,8 +33,13 @@ import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
 ) {
+
+    val studyPackages = homeScreenViewModel.getAllStudyPack
+    val coroutineScope = rememberCoroutineScope()
+
 
     Column(
         modifier = Modifier
@@ -37,13 +49,14 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        HomeCreateStudyPack(navController = navController)
-        StudyPackList(
-            studyPackages = listOf(
-                StudyPack(id = 1, studyPackName = "test1"),
-                StudyPack(id = 2, studyPackName = "test2")
-            ), navController = navController
+        HomeCreateStudyPack(
+            navController = navController
         )
+        StudyPackList(
+            studyPackages = studyPackages,
+            navController = navController
+        )
+
     }
 }
 

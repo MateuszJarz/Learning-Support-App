@@ -11,18 +11,23 @@ import androidx.navigation.NavController
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun StudyPackList(
     studyPackages: List<StudyPack>,
     navController: NavController
 ) {
+
     LazyColumn(
         contentPadding = PaddingValues(SMALL_PADDING),
         verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
     ) {
         items(studyPackages) { studyPack ->
-            StudyPackItem(studyPack = studyPack)
+            StudyPackItem(
+                studyPack = studyPack,
+                //  navController = navController
+            )
         }
     }
 
@@ -30,14 +35,17 @@ fun StudyPackList(
 
 @Composable
 fun StudyPackItem(
-    studyPack: StudyPack
+    studyPack: StudyPack,
+    // navController: NavController
 ) {
     SelectionFieldItem(
         titleText = studyPack.studyPackName,
         buttonName = stringResource(R.string.start_button),
-        onClick = { TODO() }
-    )
-}
+        onClick = { //navController.navigate(Screen.EducationProcess.passEduPackId())
+             }
+            )
+        }
+
 
 @Preview
 @Composable

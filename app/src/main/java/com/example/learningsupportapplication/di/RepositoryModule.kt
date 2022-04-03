@@ -4,6 +4,8 @@ import com.example.learningsupportapplication.data.repository.Repository
 import com.example.learningsupportapplication.domain.use_case.UseCase
 import com.example.learningsupportapplication.domain.use_case.add_new_pack_with_list_of_cards.AddNewPackWithListOfCards
 import com.example.learningsupportapplication.domain.use_case.add_new_study_pack.AddNewStudyPack
+import com.example.learningsupportapplication.domain.use_case.get_all_study_pack.GetAllStudyPack
+import com.example.learningsupportapplication.domain.use_case.get_study_cards_by_study_pack_id.GetStudyCardsByStudyPackId
 import com.example.learningsupportapplication.domain.use_case.get_study_pack_by_id.GetStudyPackById
 import dagger.Module
 import dagger.Provides
@@ -21,7 +23,9 @@ object RepositoryModule {
         return UseCase(
             addNewPackWithListOfCards = AddNewPackWithListOfCards(repository = repository),
             addNewStudyPack = AddNewStudyPack(repository = repository),
-            getStudyPackById = GetStudyPackById(repository = repository)
+            getStudyPackById = GetStudyPackById(repository = repository),
+            getStudyCardsByStudyPackId = GetStudyCardsByStudyPackId(repository = repository),
+            getAllStudyPack = GetAllStudyPack(repository = repository)
         )
     }
 }

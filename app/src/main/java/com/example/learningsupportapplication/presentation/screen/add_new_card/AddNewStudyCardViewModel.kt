@@ -5,15 +5,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_NAME
+import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.domain.model.StudyPackRelation
 import com.example.learningsupportapplication.domain.use_case.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class AddNewStudyCardViewModel @Inject constructor(
@@ -21,24 +23,27 @@ class AddNewStudyCardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val _createdPack: MutableStateFlow<StudyPack?> = MutableStateFlow(null)
+    // val createdPack: StateFlow<StudyPack?> = _createdPack
+
     private val _studyCardPageOneText = mutableStateOf("")
     val studyCardPageOneText = _studyCardPageOneText
 
     private val _studyCardPageTwoText = mutableStateOf("")
     val studyCardPageTwoText = _studyCardPageTwoText
 
-    private lateinit var _studyPackName: String
 
     var currentList = mutableListOf<StudyCard>()
 
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val studyPackName = savedStateHandle.get<String>(STUDY_PACK_ARGUMENT_NAME)
 
-            if (studyPackName != null) {
-                _studyPackName = studyPackName
-            }
+            val studyPackId = savedStateHandle.get<Int>(STUDY_PACK_ARGUMENT_KEY)
+            _createdPack.value = studyPackId?.let { useCase.getStudyPackById(it) }
+            _createdPack.value?.id.let { Log.d("_createdPack", it.toString()) }
         }
+
     }
 
     fun insertCardToCurrentList(firstPage: String, secondPage: String) {
@@ -50,20 +55,25 @@ class AddNewStudyCardViewModel @Inject constructor(
                 secondPage = secondPage
             )
             currentList.add(studyCard)
-            Log.d("currentList", currentList.size.toString())
-            Log.d("currentList", currentList[0].firstPage + " " + currentList[0].secondPage)
-        }
 
+        }
     }
 
-    fun insertCardsToDataBase(studyCard: MutableList<StudyCard>) {
+    fun insertCardsToDataBase() {
         viewModelScope.launch(Dispatchers.IO) {
 
-            val studyPack = StudyPack(0, _studyPackName)
-            useCase.addNewStudyPack(studyPack = studyPack)
+            val studyPackRelation =
+                _createdPack.value?.let {
+                    StudyPackRelation(
+                        studyPack = it,
+                        studyCard = currentList
+                    )
+                }
 
-            val studyPackRelation = StudyPackRelation(studyPack = studyPack, currentList)
-            useCase.addNewPackWithListOfCards(studyPackRelation = studyPackRelation)
+            if (studyPackRelation != null) {
+                useCase.addNewPackWithListOfCards(studyPackRelation = studyPackRelation)
+            }
         }
     }
+
 }

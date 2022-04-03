@@ -6,8 +6,7 @@ import com.example.learningsupportapplication.domain.model.StudyPack
 class AddNewStudyPack(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(studyPack: StudyPack) {
-
-        repository.addNewStudyPack(studyPack = studyPack)
+    suspend operator fun invoke(studyPack: StudyPack): Long {
+        return repository.addNewStudyPack(studyPack = studyPack)
     }
 }

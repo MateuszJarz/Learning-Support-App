@@ -9,11 +9,16 @@ class Repository @Inject constructor(
     private val studyPackDao: StudyPackDao
 ) {
 
-    suspend fun addNewStudyPack(studyPack: StudyPack){
-        studyPackDao.addNewStudyPack(studyPack)
+    suspend fun addNewStudyPack(studyPack: StudyPack): Long {
+        return studyPackDao.addNewStudyPack(studyPack)
     }
+
     suspend fun addNewPackWithListOfCards(studyPackRelation: StudyPackRelation) {
         studyPackDao.addNewPackWithListOfCards(studyPackRelation)
+    }
+
+    suspend fun getStudyPackById(idStudyPack: Int): StudyPack {
+        return studyPackDao.getStudyPackById(idStudyPack = idStudyPack)
     }
 
 }

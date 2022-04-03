@@ -3,6 +3,7 @@ package com.example.learningsupportapplication.data.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.domain.model.StudyPackRelation
@@ -11,10 +12,14 @@ import com.example.learningsupportapplication.domain.model.StudyPackRelation
 interface StudyPackDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addNewStudyPack(studyPack: StudyPack)
+    suspend fun addNewStudyPack(studyPack: StudyPack): Long
+
 
     @Insert
     suspend fun insertAllStudyCard(studyCard: List<StudyCard>)
+
+    @Query("SELECT * FROM study_pack_table WHERE id LIKE :idStudyPack")
+    suspend fun getStudyPackById(idStudyPack: Int): StudyPack
 
     suspend fun addNewPackWithListOfCards(studyPackRelation: StudyPackRelation) {
         val idStudyPack = studyPackRelation.studyPack.id

@@ -22,7 +22,8 @@ fun AddNewStudyCard(
     var studyCardPageOneText by addNewStudyCardViewModel.studyCardPageOneText
     var studyCardPageTwoText by addNewStudyCardViewModel.studyCardPageTwoText
 
-    var currentListOfCards = addNewStudyCardViewModel.currentList
+
+
 
 
     Surface(
@@ -47,10 +48,9 @@ fun AddNewStudyCard(
                     firstPage = studyCardPageOneText,
                     secondPage = studyCardPageTwoText
                 )
-
             },
             onClickCreate = {
-                addNewStudyCardViewModel.insertCardsToDataBase(currentListOfCards)
+                addNewStudyCardViewModel.insertCardsToDataBase()
             }
         )
     }

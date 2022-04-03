@@ -11,7 +11,7 @@ sealed class Screen(val route: String) {
 
     // Education Process
     object EducationProcess : Screen(route = "education_process/{studyPackId}") {
-        fun passEduPackID(packId: Int): String {
+        fun passEduPackId(packId: Int): String {
             return "education_process/$packId"
         }
     }
@@ -20,9 +20,9 @@ sealed class Screen(val route: String) {
     object CreateStudyPack : Screen(route = "create_study_pack_screen")
 
 
-    object AddNewStudyCard : Screen(route = "add_new_study_card_screen/{studyPackName}") {
-        fun passStudyPackName(studyPackName: String): String {
-            return "add_new_study_card_screen/$studyPackName"
+    object AddNewStudyCard : Screen(route = "add_new_study_card_screen/{studyPackId}") {
+        fun passStudyPackId(studyPackId: Int): String {
+            return "add_new_study_card_screen/$studyPackId"
         }
     } // Set name
 

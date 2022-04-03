@@ -11,16 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.ui.theme.BORDER_SIZE
 import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -30,18 +31,23 @@ fun CreateStudyPack(
 ) {
     val context = LocalContext.current
     var studyPackName by createStudyPackViewModel.studyPackName
-
+    val studyPackId = createStudyPackViewModel.studyPackId.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
     CreateStudyPackItems(
         studyPackName = studyPackName,
-        onValueChange={ text ->
+        onValueChange = { text ->
             studyPackName = text
-        } ,
+        },
         onClickButton = {
 
             if (it != "") {
-                createStudyPackViewModel.insertStudyPackToDataBase()
-                navController.navigate(Screen.AddNewStudyCard.passStudyPackName(it))
+
                 Log.d("StudyPackName", it)
+                coroutineScope.launch {
+                    createStudyPackViewModel.insertStudyPackToDataBase()
+                    navController.navigate(Screen.AddNewStudyCard.passStudyPackId(studyPackId = studyPackId.value))
+                }
+
             } else {
                 Toast.makeText(context, "Wprowadz nazwe pakietu", Toast.LENGTH_SHORT).show()
             }
@@ -51,11 +57,10 @@ fun CreateStudyPack(
 
 @Composable
 fun CreateStudyPackItems(
-     studyPackName: String,
-     onValueChange: (String)-> Unit,
+    studyPackName: String,
+    onValueChange: (String) -> Unit,
     onClickButton: (String) -> Unit,
 ) {
-
 
 
     Scaffold {

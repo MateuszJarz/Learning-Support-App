@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY
-import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_NAME
 import com.example.learningsupportapplication.presentation.screen.add_new_card.AddNewStudyCard
 import com.example.learningsupportapplication.presentation.screen.create_study_pack.CreateStudyPack
 import com.example.learningsupportapplication.presentation.screen.home.HomeScreen
@@ -48,8 +47,8 @@ fun SetupNavGraph(navController: NavHostController) {
 
         composable(
             route = Screen.AddNewStudyCard.route,
-            arguments = listOf(navArgument(STUDY_PACK_ARGUMENT_NAME) {
-                type = NavType.StringType
+            arguments = listOf(navArgument(STUDY_PACK_ARGUMENT_KEY) {
+                type = NavType.IntType
             })
 
         ) {

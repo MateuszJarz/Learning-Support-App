@@ -11,8 +11,8 @@ sealed class Screen(val route: String) {
 
     // Education Process
     object EducationProcess : Screen(route = "education_process/{studyPackId}") {
-        fun passEduPackId(packId: Int): String {
-            return "education_process/$packId"
+        fun passEduPackId(studyPackId: Int): String {
+            return "education_process/$studyPackId"
         }
     }
 

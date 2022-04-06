@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.domain.use_case.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class HomeScreenViewModel @Inject constructor(
 
     init {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val _getAllStudyPack = useCase.getAllStudyPack()
             _getAllStudyPack.collect() {
                 getAllStudyPack = it

@@ -30,7 +30,7 @@ class Repository @Inject constructor(
         return studyPackDao.getStudyPackById(idStudyPack = idStudyPack)
     }
 
-    fun getStudyCardsByStudyPackId(idStudyPack: Int): List<StudyCard> {
+    fun getStudyCardsByStudyPackId(idStudyPack: Int): MutableList<StudyCard> {
         return studyCardDao.getStudyCardsByStudyPackId(idStudyPack = idStudyPack)
     }
 

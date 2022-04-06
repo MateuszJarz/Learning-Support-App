@@ -1,6 +1,9 @@
 package com.example.learningsupportapplication.presentation.screen.add_new_card
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -32,8 +35,14 @@ class AddNewStudyCardViewModel @Inject constructor(
     private val _studyCardPageTwoText = mutableStateOf("")
     val studyCardPageTwoText = _studyCardPageTwoText
 
+    private val _bitmap = mutableStateOf<Bitmap?>(null)
+    val bitmap = _bitmap
 
-    var currentList = mutableListOf<StudyCard>()
+    private val _imageUri = mutableStateOf<Uri?>(null)
+    val imageUri = _imageUri
+
+
+    private var currentList = mutableListOf<StudyCard>()
 
 
     init {
@@ -46,13 +55,15 @@ class AddNewStudyCardViewModel @Inject constructor(
 
     }
 
-    fun insertCardToCurrentList(firstPage: String, secondPage: String) {
+
+    fun insertCardToCurrentList() {
         viewModelScope.launch(Dispatchers.IO) {
             val studyCard = StudyCard(
                 id = 0,
                 idStudyPack = 0,
-                firstPage = firstPage,
-                secondPage = secondPage
+                firstPage = studyCardPageOneText.value,
+                secondPage = studyCardPageTwoText.value,
+                image = bitmap.value
             )
             currentList.add(studyCard)
 

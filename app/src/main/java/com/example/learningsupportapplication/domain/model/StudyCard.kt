@@ -1,5 +1,6 @@
 package com.example.learningsupportapplication.domain.model
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,6 +12,7 @@ data class StudyCard(
     var idStudyPack: Int,
     val firstPage: String,
     val secondPage: String,
+    val image: Bitmap? = null,
 
     /* var correctAnswer: Int = 0,
      var wrongAnswer: Int = 0,
@@ -18,6 +20,6 @@ data class StudyCard(
      val subOrderWrongAnswer: Int = 0,
      var inProgress: Boolean = false*/
 
-// val Image: Bitmap? = null,
+
     // number of correct and wrong Answer for flashcard
 )

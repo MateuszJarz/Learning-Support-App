@@ -1,6 +1,5 @@
 package com.example.learningsupportapplication.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.learningsupportapplication.data.local.dao.StudyCardDao
 import com.example.learningsupportapplication.data.local.dao.StudyPackDao
 import com.example.learningsupportapplication.domain.model.StudyCard
@@ -22,7 +21,7 @@ class Repository @Inject constructor(
         studyPackDao.addNewPackWithListOfCards(studyPackRelation)
     }
 
-    fun getAllStudyPack(): Flow<List<StudyPack>>{
+    fun getAllStudyPack(): Flow<List<StudyPack>> {
         return studyPackDao.getAllStudyPack()
     }
 

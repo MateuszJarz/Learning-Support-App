@@ -13,8 +13,8 @@ import androidx.navigation.NavController
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.navigation.Screen
+import com.example.learningsupportapplication.presentation.components.SelectionFieldItem
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,12 +30,18 @@ fun StudyPackList(
         items(studyPackages) { studyPack ->
             StudyPackItem(
                 studyPack = studyPack,
-                onClick = {
+                onClickButton = {
                     coroutineScope.launch {
                         navController.navigate(Screen.EducationProcess.passEduPackId(studyPackId = studyPack.id))
-                        Log.d("SPL" ,studyPack.id.toString())
+                        Log.d("SPL", studyPack.id.toString())
                     }
-                    Log.d("SPL" ,studyPack.id.toString())
+                    Log.d("SPL", studyPack.id.toString())
+                },
+
+                onClickIconButton = {
+                    navController.navigate(
+                        Screen.EditStudyPack.passStudyPackId(studyPackId = studyPack.id)
+                    )
                 }
             )
         }
@@ -46,17 +52,23 @@ fun StudyPackList(
 @Composable
 fun StudyPackItem(
     studyPack: StudyPack,
-   onClick: () -> Unit) {
+    onClickButton: () -> Unit,
+    onClickIconButton: () -> Unit
+) {
     SelectionFieldItem(
         titleText = studyPack.studyPackName,
         buttonName = stringResource(R.string.start_button),
-        onClick = { onClick()}
-            )
-        }
+        onClickButton = { onClickButton() },
+        onClickIconButton = { onClickIconButton() }
+    )
+}
 
 
 @Preview
 @Composable
 fun StudyPackItemPreview() {
-    StudyPackItem(StudyPack(id = 1, studyPackName = "Test"), onClick = {})
+    StudyPackItem(
+        StudyPack(id = 1, studyPackName = "Test"),
+        onClickButton = {},
+        onClickIconButton = {})
 }

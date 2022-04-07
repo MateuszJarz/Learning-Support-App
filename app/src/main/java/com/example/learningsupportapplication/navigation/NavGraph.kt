@@ -10,20 +10,24 @@ import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY
 import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY_EDU
 import com.example.learningsupportapplication.presentation.screen.add_new_card.AddNewStudyCard
 import com.example.learningsupportapplication.presentation.screen.create_study_pack.CreateStudyPack
+import com.example.learningsupportapplication.presentation.screen.edit_study_pack.EditStudyPackScreen
 import com.example.learningsupportapplication.presentation.screen.education_process.EducationProcess
 import com.example.learningsupportapplication.presentation.screen.home.HomeScreen
+import com.example.learningsupportapplication.presentation.screen.welcome.WelcomeScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Welcome.route
     ) {
         composable(route = Screen.Splash.route) {
 
         }
         composable(route = Screen.Welcome.route) {
-
+            WelcomeScreen(navHostController = navController)
         }
         composable(route = Screen.Home.route) {
             HomeScreen(navController = navController)
@@ -57,6 +61,7 @@ fun SetupNavGraph(navController: NavHostController) {
         ) {
             AddNewStudyCard(navController = navController)
         }
+
         // Edit Process
         composable(
             route = Screen.EditStudyPack.route,
@@ -64,7 +69,7 @@ fun SetupNavGraph(navController: NavHostController) {
                 type = NavType.IntType
             })
         ) {
-
+            EditStudyPackScreen(navController = navController)
         }
     }
 }

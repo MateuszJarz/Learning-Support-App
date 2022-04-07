@@ -19,7 +19,6 @@ import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -34,7 +33,7 @@ fun DraggableCardAndNormalCard(
     modifier: Modifier = Modifier,
     check: MutableState<Boolean>,
     onButtonClick: () -> Unit,
-    onSwiped:  (Any,Any) -> Unit,
+    onSwiped: (Any, Any) -> Unit,
     content1: @Composable () -> Unit,
     content2: @Composable () -> Unit,
 ) {
@@ -71,7 +70,7 @@ fun NormalCard(
     modifier: Modifier = Modifier,
     check: MutableState<Boolean>,
     onButtonClick: () -> Unit,
-    onClick: (Any,Any) -> Unit,
+    onClick: (Any, Any) -> Unit,
     content2: @Composable () -> Unit,
 ) {
     Card(
@@ -84,7 +83,7 @@ fun NormalCard(
     Button(onClick = { onButtonClick() }) {
 
     }
-    onClick(check,item)
+    onClick(check, item)
 }
 
 @Composable
@@ -139,7 +138,7 @@ fun DraggableCard(
                 check.value = true
 
             }
-      //  onSwiped(swipeResult, item)
+        //  onSwiped(swipeResult, item)
 
     }
 

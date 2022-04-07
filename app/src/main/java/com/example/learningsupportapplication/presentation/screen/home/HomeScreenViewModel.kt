@@ -22,7 +22,7 @@ class HomeScreenViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             val _getAllStudyPack = useCase.getAllStudyPack()
-            _getAllStudyPack.collect() {
+            _getAllStudyPack.collect {
                 getAllStudyPack = it
             }
         }

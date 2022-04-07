@@ -112,7 +112,7 @@ fun CardContent(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.weight(1f)
                 )
-            }else{
+            } else {
                 Image(
                     painter = painterResource(id = R.drawable.ic_launcher_background),
                     contentDescription = null,

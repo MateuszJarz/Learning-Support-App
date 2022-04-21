@@ -1,5 +1,6 @@
 package com.example.learningsupportapplication.presentation.screen.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +28,8 @@ import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
     * - name of pack
     * - */
 
+@ExperimentalMaterialApi
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
@@ -36,24 +39,24 @@ fun HomeScreen(
     val studyPackages = homeScreenViewModel.getAllStudyPack
     val coroutineScope = rememberCoroutineScope()
 
+    Scaffold(
+        backgroundColor = MaterialTheme.colors.background,
+        topBar = {
+            TopAppBar() {
+            }
+        }, content = {
+            StudyPackList(
+                studyPackages = studyPackages,
+                navController = navController
+            )
+        }
+        ,
+        bottomBar = {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(all = LARGE_PADDING),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        }
+    )
 
-        HomeCreateStudyPack(
-            navController = navController
-        )
-        StudyPackList(
-            studyPackages = studyPackages,
-            navController = navController
-        )
 
-    }
 }
 
 

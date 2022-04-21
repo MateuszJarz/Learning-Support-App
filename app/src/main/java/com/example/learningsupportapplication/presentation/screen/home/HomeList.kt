@@ -1,22 +1,20 @@
 package com.example.learningsupportapplication.presentation.common
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.navigation.Screen
-import com.example.learningsupportapplication.presentation.components.SelectionFieldItem
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 fun StudyPackList(
     studyPackages: List<StudyPack>,
@@ -24,18 +22,18 @@ fun StudyPackList(
 ) {
     val coroutineScope = rememberCoroutineScope()
     LazyColumn(
-        contentPadding = PaddingValues(SMALL_PADDING),
-        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+
     ) {
         items(studyPackages) { studyPack ->
+
             StudyPackItem(
                 studyPack = studyPack,
                 onClickButton = {
                     coroutineScope.launch {
                         navController.navigate(Screen.EducationProcess.passEduPackId(studyPackId = studyPack.id))
-                        Log.d("SPL", studyPack.id.toString())
+
                     }
-                    Log.d("SPL", studyPack.id.toString())
+
                 },
 
                 onClickIconButton = {
@@ -49,21 +47,30 @@ fun StudyPackList(
 
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun StudyPackItem(
     studyPack: StudyPack,
     onClickButton: () -> Unit,
     onClickIconButton: () -> Unit
 ) {
-    SelectionFieldItem(
-        titleText = studyPack.studyPackName,
-        buttonName = stringResource(R.string.start_button),
+
+    ListItem(
+        title = studyPack.studyPackName,
         onClickButton = { onClickButton() },
         onClickIconButton = { onClickIconButton() }
     )
+
+
+    /* SelectionFieldItem(
+         titleText = studyPack.studyPackName,
+         buttonName = stringResource(R.string.start_button),
+         onClickButton = { onClickButton() },
+         onClickIconButton = { onClickIconButton() }
+     )*/
 }
 
-
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun StudyPackItemPreview() {

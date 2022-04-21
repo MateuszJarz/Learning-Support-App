@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY
+import com.example.util.Constants.STUDY_PACK_ARGUMENT_KEY
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.domain.model.StudyPackRelation

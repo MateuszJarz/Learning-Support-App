@@ -18,8 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.learningsupportapplication.Constants.LAST_ON_BOARDING_PAGE
-import com.example.learningsupportapplication.Constants.ON_BOARDING_PAGE_COUNT
+import com.example.util.Constants.LAST_ON_BOARDING_PAGE
+import com.example.util.Constants.ON_BOARDING_PAGE_COUNT
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.OnBoardingPage
 import com.example.learningsupportapplication.navigation.Screen

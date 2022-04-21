@@ -1,6 +1,7 @@
 package com.example.learningsupportapplication.presentation.screen.add_new_card
 
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.presentation.common.StudyCardSheet
+import com.example.util.Constants.DEFAULT_IMAGE_PATH
 
 
 @Composable
@@ -37,15 +39,20 @@ fun AddNewStudyCard(
 
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { _uri ->
+
             if (_uri != null) {
                 imageUri.value = _uri
             }
 
+
         }
 
+
     imageUri.let {
-        val uri = it.value
+        var defaultUri = Uri.parse(DEFAULT_IMAGE_PATH)
+        var uri = it.value
         if (uri != null) {
+
             if (Build.VERSION.SDK_INT < 28) {
                 bitmap.value = MediaStore.Images
                     .Media.getBitmap(context.contentResolver, uri)
@@ -60,10 +67,9 @@ fun AddNewStudyCard(
 
             }*/
         }
+
+
     }
-
-
-
 
     Surface(
         modifier = Modifier.fillMaxSize()

@@ -1,13 +1,14 @@
 package com.example.learningsupportapplication.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY
-import com.example.learningsupportapplication.Constants.STUDY_PACK_ARGUMENT_KEY_EDU
+import com.example.util.Constants.STUDY_PACK_ARGUMENT_KEY
+import com.example.util.Constants.STUDY_PACK_ARGUMENT_KEY_EDU
 import com.example.learningsupportapplication.presentation.screen.add_new_card.AddNewStudyCard
 import com.example.learningsupportapplication.presentation.screen.create_study_pack.CreateStudyPack
 import com.example.learningsupportapplication.presentation.screen.edit_study_pack.EditStudyPackScreen
@@ -16,12 +17,13 @@ import com.example.learningsupportapplication.presentation.screen.home.HomeScree
 import com.example.learningsupportapplication.presentation.screen.welcome.WelcomeScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Welcome.route
+        startDestination = Screen.Home.route
     ) {
         composable(route = Screen.Splash.route) {
 

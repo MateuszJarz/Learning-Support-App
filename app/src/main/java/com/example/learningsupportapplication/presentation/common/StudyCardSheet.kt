@@ -142,7 +142,7 @@ fun PhotoCardItem(
             Column(
                 horizontalAlignment = Alignment.End
             ) {
-                Text(text = "Choose a photo from gallery")
+                Text(text = "Select image from gallery")
                 Button(
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                     shape = RoundedCornerShape(SMALL_PADDING),

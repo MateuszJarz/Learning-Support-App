@@ -1,5 +1,7 @@
 package com.example.learningsupportapplication.presentation.screen.create_study_pack
 
+import android.annotation.SuppressLint
+import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -32,6 +34,7 @@ fun CreateStudyPack(
     var studyPackName by createStudyPackViewModel.studyPackName
     val studyPackId = createStudyPackViewModel.studyPackId.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+
     CreateStudyPackItems(
         studyPackName = studyPackName,
         onValueChange = { text ->
@@ -39,21 +42,32 @@ fun CreateStudyPack(
         },
         onClickButton = {
 
+
             if (it != "") {
 
                 Log.d("StudyPackName", it)
                 coroutineScope.launch {
-                    createStudyPackViewModel.insertStudyPackToDataBase()
-                    navController.navigate(Screen.AddNewStudyCard.passStudyPackId(studyPackId = studyPackId.value))
+                    try {
+                        createStudyPackViewModel.insertStudyPackToDataBase()
+                        navController.navigate(Screen.AddNewStudyCard.passStudyPackId(studyPackId = studyPackId.value))
+                    } catch (e: SQLiteConstraintException) {
+                        Toast.makeText(
+                            context,
+                            "The package name already exists! Please select another one again!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
             } else {
-                Toast.makeText(context, "Wprowadz nazwe pakietu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Enter a package name! ", Toast.LENGTH_SHORT).show()
             }
+
 
         })
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CreateStudyPackItems(
     studyPackName: String,
@@ -62,7 +76,10 @@ fun CreateStudyPackItems(
 ) {
 
 
-    Scaffold {
+    Scaffold(
+
+    ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,7 +91,6 @@ fun CreateStudyPackItems(
             Text(
                 text = "Name"
             )
-
             OutlinedTextField(
                 modifier = Modifier
                     .width(322.dp)
@@ -91,7 +107,6 @@ fun CreateStudyPackItems(
                     )
                 }
             )
-
             Button(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 shape = RoundedCornerShape(SMALL_PADDING),
@@ -110,9 +125,11 @@ fun CreateStudyPackItems(
 
 }
 
+/*
 
 @Preview
 @Composable
 fun CreateStudyPackItemsPreview() {
     CreateStudyPackItems("", onValueChange = {}, onClickButton = {})
 }
+*/

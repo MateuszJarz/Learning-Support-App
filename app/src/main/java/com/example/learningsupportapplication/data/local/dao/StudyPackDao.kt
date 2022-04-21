@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StudyPackDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addNewStudyPack(studyPack: StudyPack): Long
 
     @Query("SELECT * FROM study_pack_table ORDER BY id ASC")

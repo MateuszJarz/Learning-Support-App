@@ -1,6 +1,10 @@
 package com.example.learningsupportapplication.presentation.screen.create_study_pack
 
+import android.content.Context
+import android.database.sqlite.SQLiteConstraintException
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.learningsupportapplication.domain.model.StudyPack
@@ -25,14 +29,17 @@ class CreateStudyPackViewModel @Inject constructor(
     var studyPackId: StateFlow<Int> = _studyPackId
 
 
+
     suspend fun insertStudyPackToDataBase() {
 
         withContext(viewModelScope.coroutineContext) {
 
-            val studyPack = StudyPack(0, studyPackName.value)
-            useCase.addNewStudyPack(studyPack = studyPack).let {
-                _studyPackId.value = it.toInt()
-            }
+                val studyPack = StudyPack(0, studyPackName.value)
+                useCase.addNewStudyPack(studyPack = studyPack).let {
+                    _studyPackId.value = it.toInt()
+                }
+
+
         }
 
     }

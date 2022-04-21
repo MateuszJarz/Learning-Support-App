@@ -24,7 +24,7 @@ fun ListItem(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(all = LIST_PADDING)
+            .padding(all = LIST_ITEM_PADDING)
             .height(LIST_ITEM_HEIGHT),
         color = MaterialTheme.colors.listItemColor,
         shape = RoundedCornerShape(SMALL_PADDING),

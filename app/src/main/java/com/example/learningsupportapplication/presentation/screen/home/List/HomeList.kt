@@ -2,18 +2,40 @@ package com.example.learningsupportapplication.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.learningsupportapplication.domain.model.StudyPack
 import com.example.learningsupportapplication.navigation.Screen
+import com.example.learningsupportapplication.presentation.screen.home.List.EmptyList
+import com.example.learningsupportapplication.ui.theme.LIST_ITEM_HEIGHT
+import com.example.learningsupportapplication.ui.theme.LIST_ITEM_PADDING
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
+@Composable
+fun HandleStudyPackList(
+    studyPackages: List<StudyPack>,
+    navController: NavController
+) {
+    if (studyPackages.isEmpty()) {
+        EmptyList()
+    } else {
+        StudyPackList(
+            studyPackages = studyPackages,
+            navController = navController
+
+        )
+    }
+}
 @ExperimentalMaterialApi
 @Composable
 fun StudyPackList(
@@ -22,7 +44,7 @@ fun StudyPackList(
 ) {
     val coroutineScope = rememberCoroutineScope()
     LazyColumn(
-
+        modifier = Modifier.padding(start = LIST_ITEM_PADDING, end = LIST_ITEM_PADDING)
     ) {
         items(studyPackages) { studyPack ->
 
@@ -62,12 +84,6 @@ fun StudyPackItem(
     )
 
 
-    /* SelectionFieldItem(
-         titleText = studyPack.studyPackName,
-         buttonName = stringResource(R.string.start_button),
-         onClickButton = { onClickButton() },
-         onClickIconButton = { onClickIconButton() }
-     )*/
 }
 
 @ExperimentalMaterialApi

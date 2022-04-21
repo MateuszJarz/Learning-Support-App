@@ -2,11 +2,10 @@ package com.example.learningsupportapplication.presentation.screen.home
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.ui.theme.textItemColor
 
 @Composable
@@ -14,15 +13,19 @@ fun HomeTopBar(
     navController: NavHostController
 ) {
     HomeTopBarContent(
-        onAddClicked = {
-            navController.navigate(Screen.CreateStudyPack.route)
+        onButtonClicked = {
+
+        },
+        onSearchClicked = {
+
         }
     )
 }
 
 @Composable
 fun HomeTopBarContent(
-    onAddClicked: () -> Unit
+    onButtonClicked: () -> Unit,
+    onSearchClicked: () -> Unit
 ) {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.background,
@@ -33,9 +36,10 @@ fun HomeTopBarContent(
             )
         },
         actions = {
-            DropDownMenu {
-                onAddClicked()
-            }
+            ListAppBarAction(
+                onButtonClicked = onButtonClicked,
+                onSearchClicked = onSearchClicked
+            )
         }
     )
 
@@ -43,14 +47,16 @@ fun HomeTopBarContent(
 
 @Composable
 fun ListAppBarAction(
-    onButtonClicked: () -> Unit
+    onButtonClicked: () -> Unit,
+    onSearchClicked: () -> Unit
 ) {
-    DropDownMenu(onButtonClicked = {onButtonClicked()})
+    SearchAction(onSearchClicked = { onSearchClicked() })
+    DropDownMenuAction(onButtonClicked = { onButtonClicked() })
 
 }
 
 @Composable
-fun DropDownMenu(
+fun DropDownMenuAction(
     onButtonClicked: () -> Unit
 ) {
 
@@ -62,6 +68,24 @@ fun DropDownMenu(
         Icon(
             imageVector = Icons.Default.Menu,
             contentDescription = "Add Icon",
+            tint = MaterialTheme.colors.textItemColor
+        )
+    }
+}
+
+@Composable
+fun SearchAction(
+    onSearchClicked: () -> Unit
+) {
+
+    IconButton(
+        onClick = {
+            onSearchClicked()
+        }
+    ) {
+        Icon(
+            imageVector = Icons.Default.Search,
+            contentDescription = "Search Icon",
             tint = MaterialTheme.colors.textItemColor
         )
     }

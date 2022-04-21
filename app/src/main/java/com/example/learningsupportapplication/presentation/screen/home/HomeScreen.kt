@@ -1,34 +1,20 @@
 package com.example.learningsupportapplication.presentation.screen.home
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.navigation.Screen
-import com.example.learningsupportapplication.presentation.common.StudyPackList
-import com.example.learningsupportapplication.ui.theme.BORDER_SIZE
-import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
-import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
+import com.example.learningsupportapplication.presentation.common.HandleStudyPackList
 
 
 /*
@@ -50,7 +36,7 @@ fun HomeScreen(
     val studyPackages = homeScreenViewModel.getAllStudyPack
     val coroutineScope = rememberCoroutineScope()
 
-    val fabShape =  CutCornerShape(
+    val fabShape = CutCornerShape(
         topStart = 50.dp,
         topEnd = 50.dp,
         bottomEnd = 50.dp,
@@ -67,7 +53,7 @@ fun HomeScreen(
             )
 
         }, content = {
-            StudyPackList(
+            HandleStudyPackList(
                 studyPackages = studyPackages,
                 navController = navController
             )

@@ -1,4 +1,4 @@
-package com.example.util
+package com.example.learningsupportapplication.util
 
 enum class LearningCardState {
     ON_QUESTION,

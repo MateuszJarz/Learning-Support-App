@@ -6,10 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.util.Constants.STUDY_PACK_ARGUMENT_KEY_EDU
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.use_case.UseCase
-import com.example.util.LearningCardState
+import com.example.learningsupportapplication.util.Constants.STUDY_PACK_ARGUMENT_KEY_EDU
+import com.example.learningsupportapplication.util.LearningCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,9 +25,8 @@ class EducationProcessViewModel @Inject constructor(
     ) : ViewModel() {
 
 
-
-    val learningCardState : MutableState<LearningCardState>
-    = mutableStateOf(LearningCardState.ON_QUESTION)
+    val learningCardState: MutableState<LearningCardState> =
+        mutableStateOf(LearningCardState.ON_QUESTION)
 
 
     private val _studyCards: MutableStateFlow<MutableList<StudyCard>?> =

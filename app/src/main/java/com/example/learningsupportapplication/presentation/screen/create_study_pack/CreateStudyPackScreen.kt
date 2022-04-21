@@ -76,9 +76,7 @@ fun CreateStudyPackItems(
 ) {
 
 
-    Scaffold(
-
-    ) {
+    Scaffold {
 
         Column(
             modifier = Modifier
@@ -125,11 +123,10 @@ fun CreateStudyPackItems(
 
 }
 
-/*
 
 @Preview
 @Composable
 fun CreateStudyPackItemsPreview() {
     CreateStudyPackItems("", onValueChange = {}, onClickButton = {})
 }
-*/
+

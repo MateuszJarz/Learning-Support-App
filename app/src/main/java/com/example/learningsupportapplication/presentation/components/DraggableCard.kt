@@ -1,4 +1,5 @@
 package com.example.learningsupportapplication.presentation.components
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
@@ -16,8 +17,7 @@ import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.example.util.LearningCardState
-import com.example.util.SwipeResult
+import com.example.learningsupportapplication.util.SwipeResult
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -68,11 +68,11 @@ fun DraggableCard(
         }
     } else {
 
-        val swipeResult = if (swipeX.value > 0){
+        val swipeResult = if (swipeX.value > 0) {
             SwipeResult.ACCEPTED
 
 
-        } else{
+        } else {
             SwipeResult.REJECTED
 
         }

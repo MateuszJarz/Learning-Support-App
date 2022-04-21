@@ -35,12 +35,12 @@ fun EditStudyPackList(
     studyCards: List<StudyCard>,
 ) {
     LazyColumn(
-        contentPadding =  PaddingValues(SMALL_PADDING),
+        contentPadding = PaddingValues(SMALL_PADDING),
         verticalArrangement = Arrangement.Center
-    ){
-        items(studyCards){ item: StudyCard ->
-            Surface() {
-                item.image?.let { Image( bitmap = it.asImageBitmap(), contentDescription = null) }
+    ) {
+        items(studyCards) { item: StudyCard ->
+            Surface {
+                item.image?.let { Image(bitmap = it.asImageBitmap(), contentDescription = null) }
                 Text(text = item.firstPage)
 
             }

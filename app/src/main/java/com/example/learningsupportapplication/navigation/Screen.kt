@@ -27,7 +27,7 @@ sealed class Screen(val route: String) {
     } // Set name
 
     // Edit Process
-    object EditStudyPack : Screen(route = "edit_study_pack_screen/{studyPackId}"){
+    object EditStudyPack : Screen(route = "edit_study_pack_screen/{studyPackId}") {
         fun passStudyPackId(studyPackId: Int): String {
             return "add_new_study_card_screen/$studyPackId"
         }

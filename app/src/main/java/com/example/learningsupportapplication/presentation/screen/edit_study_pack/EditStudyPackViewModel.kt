@@ -4,9 +4,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.util.Constants.STUDY_PACK_ARGUMENT_KEY
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.use_case.UseCase
+import com.example.learningsupportapplication.util.Constants.STUDY_PACK_ARGUMENT_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

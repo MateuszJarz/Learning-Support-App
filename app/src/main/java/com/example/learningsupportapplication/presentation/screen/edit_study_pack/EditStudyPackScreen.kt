@@ -1,50 +1,43 @@
 package com.example.learningsupportapplication.presentation.screen.edit_study_pack
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.learningsupportapplication.domain.model.StudyCard
-
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@ExperimentalMaterialApi
 @Composable
 fun EditStudyPackScreen(
     navController: NavHostController,
     editStudyPackViewModel: EditStudyPackViewModel = hiltViewModel()
 ) {
-    val studyCards = editStudyPackViewModel.currentList
+    val studyCards by editStudyPackViewModel.currentList.collectAsState()
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        EditStudyPackList(studyCards = studyCards)
+    Scaffold(
+        modifier = Modifier.fillMaxSize()
+            .padding(all =SMALL_PADDING),
+        topBar = {
+            EditScreenTopBar(navController = navController)
+        },
+
+    ){
+        EditStudyPackList(
+            editStudyPackViewModel = editStudyPackViewModel,
+            navController = navController,
+            studyCards = studyCards
+        )
     }
 
 }
 
-@Composable
-fun EditStudyPackList(
-    studyCards: List<StudyCard>,
-) {
-    LazyColumn(
-        contentPadding = PaddingValues(SMALL_PADDING),
-        verticalArrangement = Arrangement.Center
-    ) {
-        items(studyCards) { item: StudyCard ->
-            Surface {
-                item.image?.let { Image(bitmap = it.asImageBitmap(), contentDescription = null) }
-                Text(text = item.firstPage)
 
-            }
-
-        }
-    }
-}

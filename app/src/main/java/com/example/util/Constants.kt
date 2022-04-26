@@ -1,4 +1,4 @@
-package com.example.learningsupportapplication.util
+package com.example.util
 
 object Constants {
     const val STUDY_PACK_ARGUMENT_KEY = "studyPackId"

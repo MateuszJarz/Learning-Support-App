@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.navigation.Screen
 import com.example.learningsupportapplication.presentation.common.StudyCardSheet
-import com.example.learningsupportapplication.util.Constants.DEFAULT_IMAGE_PATH
+import com.example.util.Constants.DEFAULT_IMAGE_PATH
 
 
 @Composable

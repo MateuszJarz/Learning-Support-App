@@ -29,8 +29,16 @@ class Repository @Inject constructor(
         return studyPackDao.getStudyPackById(idStudyPack = idStudyPack)
     }
 
-    fun getStudyCardsByStudyPackId(idStudyPack: Int): MutableList<StudyCard> {
+    suspend fun getStudyCardsByStudyPackId(idStudyPack: Int): MutableList<StudyCard> {
         return studyCardDao.getStudyCardsByStudyPackId(idStudyPack = idStudyPack)
+    }
+
+   suspend fun deleteStudyCard(studyCard: StudyCard) {
+        return studyCardDao.deleteStudyCard(studyCard = studyCard)
+    }
+
+    suspend fun deleteAllPackage(){
+        return studyPackDao.deleteAllPackage()
     }
 
 }

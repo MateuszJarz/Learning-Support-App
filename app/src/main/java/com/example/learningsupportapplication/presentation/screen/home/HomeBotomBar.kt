@@ -1,8 +1,7 @@
 package com.example.learningsupportapplication.presentation.screen.home
 
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
@@ -23,7 +22,7 @@ fun AppBottomBar(
         backgroundColor = MaterialTheme.colors.bottomAppBarBackgroundColor,
         cutoutShape = shape
 
-    ) {
+    ){
 
     }
 

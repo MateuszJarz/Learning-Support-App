@@ -76,7 +76,9 @@ fun CreateStudyPackItems(
 ) {
 
 
-    Scaffold {
+    Scaffold(
+
+    ) {
 
         Column(
             modifier = Modifier
@@ -122,6 +124,7 @@ fun CreateStudyPackItems(
     }
 
 }
+
 
 
 @Preview

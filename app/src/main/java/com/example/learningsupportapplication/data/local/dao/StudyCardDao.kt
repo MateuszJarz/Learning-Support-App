@@ -1,9 +1,6 @@
 package com.example.learningsupportapplication.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.learningsupportapplication.domain.model.StudyCard
 
 @Dao
@@ -12,5 +9,8 @@ interface StudyCardDao {
     suspend fun addNewStudyCard(studyCard: StudyCard)
 
     @Query("SELECT * FROM study_card_table  WHERE idStudyPack  LIKE :idStudyPack ")
-    fun getStudyCardsByStudyPackId(idStudyPack: Int): MutableList<StudyCard>
+    suspend fun getStudyCardsByStudyPackId(idStudyPack: Int): MutableList<StudyCard>
+
+    @Delete
+    suspend fun deleteStudyCard(studyCard: StudyCard)
 }

@@ -3,7 +3,7 @@ package com.example.learningsupportapplication.di
 import android.content.Context
 import androidx.room.Room
 import com.example.learningsupportapplication.data.LSADataBase
-import com.example.learningsupportapplication.util.Constants.LSA_DATABASE
+import com.example.util.Constants.LSA_DATABASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,20 +1,24 @@
 package com.example.learningsupportapplication.presentation.screen.home
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 import com.example.learningsupportapplication.ui.theme.textItemColor
 
 @Composable
 fun HomeTopBar(
-    navController: NavHostController
+    navController: NavHostController,
+    onDeleteAllConfirmed: () -> Unit
 ) {
     HomeTopBarContent(
-        onButtonClicked = {
-
+        onDeleteAllConfirmed = {
+            onDeleteAllConfirmed()
         },
         onSearchClicked = {
 
@@ -24,7 +28,7 @@ fun HomeTopBar(
 
 @Composable
 fun HomeTopBarContent(
-    onButtonClicked: () -> Unit,
+    onDeleteAllConfirmed: () -> Unit,
     onSearchClicked: () -> Unit
 ) {
     TopAppBar(
@@ -37,7 +41,7 @@ fun HomeTopBarContent(
         },
         actions = {
             ListAppBarAction(
-                onButtonClicked = onButtonClicked,
+                onDeleteAllConfirmed = onDeleteAllConfirmed,
                 onSearchClicked = onSearchClicked
             )
         }
@@ -47,29 +51,45 @@ fun HomeTopBarContent(
 
 @Composable
 fun ListAppBarAction(
-    onButtonClicked: () -> Unit,
+    onDeleteAllConfirmed: () -> Unit,
     onSearchClicked: () -> Unit
 ) {
     SearchAction(onSearchClicked = { onSearchClicked() })
-    DropDownMenuAction(onButtonClicked = { onButtonClicked() })
+    DropDownMenuAction(onDeleteAllConfirmed = { onDeleteAllConfirmed() })
 
 }
 
 @Composable
 fun DropDownMenuAction(
-    onButtonClicked: () -> Unit
+    onDeleteAllConfirmed: () -> Unit
 ) {
+    var expanded by remember { mutableStateOf(false) }
 
     IconButton(
-        onClick = {
-            onButtonClicked()
-        }
+        onClick = { expanded = true }
     ) {
         Icon(
             imageVector = Icons.Default.Menu,
-            contentDescription = "Add Icon",
+            contentDescription = "Delete ALl",
             tint = MaterialTheme.colors.textItemColor
         )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(onClick = {
+                expanded = true
+                onDeleteAllConfirmed()
+            }
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = LARGE_PADDING),
+                    text = "Delete All",
+                    style = MaterialTheme.typography.subtitle2
+                )
+            }
+        }
+
     }
 }
 

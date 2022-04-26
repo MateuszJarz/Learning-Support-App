@@ -1,5 +1,6 @@
 package com.example.learningsupportapplication.presentation.common
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.learningsupportapplication.ui.theme.*
@@ -65,7 +67,7 @@ fun ListItem(
 @Preview()
 @Composable
 fun ListItemPrev() {
-    ListItem(title = "Text", onClickButton = {}) {
+   ListItem(title = "Text", onClickButton = {}) {
 
-    }
+   }
 }

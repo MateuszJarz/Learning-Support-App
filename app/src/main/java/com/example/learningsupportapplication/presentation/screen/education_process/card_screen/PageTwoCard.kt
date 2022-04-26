@@ -1,10 +1,8 @@
 package com.example.learningsupportapplication.presentation.screen.education_process.card_screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -13,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.learningsupportapplication.R
 import com.example.learningsupportapplication.domain.model.StudyCard
-import com.example.learningsupportapplication.ui.theme.LARGE_PADDING
 import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 import com.example.learningsupportapplication.ui.theme.cardItemBackgroundColor
 
@@ -34,57 +32,83 @@ fun PageTwoContent(
 
     ) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        shape = RoundedCornerShape(SMALL_PADDING),
-        color = MaterialTheme.colors.cardItemBackgroundColor
+        modifier = Modifier
+            .fillMaxSize(),
+        color = Color.LightGray,
     ) {
+
+
         Column(
-            modifier = Modifier.padding(all = LARGE_PADDING),
-            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(SMALL_PADDING)
+                .background(
+                    MaterialTheme.colors.cardItemBackgroundColor,
+                    shape = RoundedCornerShape(SMALL_PADDING)
+                ),
+
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            studyCard.image.let { bitmap ->
-                if (bitmap != null) {
-                    Image(
-                        modifier = Modifier.weight(3f),
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = "Bitmap Image",
-                        contentScale = ContentScale.Crop,
+            Box(
+                modifier = Modifier
 
-                        )
-                } else {
-                    Image(
-                        modifier = Modifier.weight(3f),
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                    .weight(7f)
 
-                        )
+            ) {
+                studyCard.image.let { bitmap ->
+                    if (bitmap != null) {
+                        Image(
+                            modifier = Modifier
+                                .size(220.dp)
+                                .align(Alignment.Center),
+                            bitmap = bitmap.asImageBitmap(),
+                            contentDescription = "Bitmap Image",
+                            contentScale = ContentScale.Fit,
+
+                            )
+                    } else {
+                        Image(
+                            modifier = Modifier
+                                .size(220.dp)
+                                .align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_launcher_background),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+
+                            )
+                    }
+
                 }
-
             }
 
 
             Text(
                 modifier = Modifier
-                    .padding(end = 8.dp)
-                    .weight(1f),
+                    .fillMaxWidth()
+                    .padding(top = SMALL_PADDING)
+                    .weight(2f),
                 text = text,
-                style = MaterialTheme.typography.h4,
-
-                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
 
             )
-            Button(onClick = { onClicked() }) {
-                Text(text = "Next")
+            Box(modifier = Modifier.weight(1f)) {
+                Button(modifier = Modifier
+                    .fillMaxWidth(0.7f)
+                    .align(Alignment.Center),
+                    onClick = { onClicked() }) {
+                    Text(text = "Next")
+                }
             }
 
 
         }
-    }
 
+
+    }
 }
 
 

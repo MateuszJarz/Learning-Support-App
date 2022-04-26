@@ -6,7 +6,7 @@ import com.example.learningsupportapplication.domain.model.StudyCard
 class GetStudyCardsByStudyPackId(
     private val repository: Repository
 ) {
-    operator fun invoke(idStudyPack: Int): MutableList<StudyCard> {
+    suspend operator fun invoke(idStudyPack: Int): MutableList<StudyCard> {
         return repository.getStudyCardsByStudyPackId(idStudyPack = idStudyPack)
     }
 }

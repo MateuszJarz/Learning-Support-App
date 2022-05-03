@@ -39,7 +39,7 @@ fun EditStudyPackList(
             StudyPackListItem(
                 studyCard = card,
                 onClickNavigate = {
-                    navController.navigate(Screen.AddNewStudyCard.route)
+                    navController.navigate(Screen.EditStudyCard.passStudyCardId(studyCardId = card.id))
                 },
                 onDeleteClicked = {
 

@@ -11,6 +11,7 @@ import com.example.learningsupportapplication.data.repository.Repository
 import com.example.util.Constants.STUDY_PACK_ARGUMENT_KEY
 import com.example.learningsupportapplication.domain.model.StudyCard
 import com.example.learningsupportapplication.domain.use_case.UseCase
+import com.example.util.Constants.STUDY_PACK_EDIT_ARGUMENT_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,10 +28,12 @@ class EditStudyPackViewModel @Inject constructor(
     private var _currentList = MutableStateFlow<List<StudyCard>>(emptyList())
     val currentList : StateFlow<List<StudyCard>> = _currentList
 
+
+
     init {
 
         viewModelScope.launch {
-            val studyPackId = savedStateHandle.get<Int>(STUDY_PACK_ARGUMENT_KEY)!!
+            val studyPackId = savedStateHandle.get<Int>(STUDY_PACK_EDIT_ARGUMENT_KEY)!!
 
             _currentList.value = studyPackId.let { useCase.getStudyCardsByStudyPackId(studyPackId) }
         }

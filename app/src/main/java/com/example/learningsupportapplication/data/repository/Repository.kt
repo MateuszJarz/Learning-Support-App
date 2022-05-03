@@ -33,11 +33,19 @@ class Repository @Inject constructor(
         return studyCardDao.getStudyCardsByStudyPackId(idStudyPack = idStudyPack)
     }
 
-   suspend fun deleteStudyCard(studyCard: StudyCard) {
+    suspend fun updateStudyCard(studyCard: StudyCard) {
+        return studyCardDao.updateStudyCard(studyCard = studyCard)
+    }
+
+    suspend fun getStudyCard(idStudyCard: Int): StudyCard {
+        return studyCardDao.getStudyCard(idStudyCard = idStudyCard)
+    }
+
+    suspend fun deleteStudyCard(studyCard: StudyCard) {
         return studyCardDao.deleteStudyCard(studyCard = studyCard)
     }
 
-    suspend fun deleteAllPackage(){
+    suspend fun deleteAllPackage() {
         return studyPackDao.deleteAllPackage()
     }
 

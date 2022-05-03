@@ -10,8 +10,8 @@ data class StudyCard(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     var idStudyPack: Int,
-    val firstPage: String,
-    val secondPage: String,
+    var firstPage: String,
+    var secondPage: String,
     val image: Bitmap? = null,
 
     /* var correctAnswer: Int = 0,

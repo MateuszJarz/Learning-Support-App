@@ -32,6 +32,11 @@ sealed class Screen(val route: String) {
             return "edit_study_pack_screen/$studyPackId"
         }
     }
+    object EditStudyCard: Screen(route ="edit_study_card_screen/{studyCardId}"){
+        fun passStudyCardId(studyCardId: Int): String {
+            return "edit_study_card_screen/$studyCardId"
+        }
+    }
 
 
 }

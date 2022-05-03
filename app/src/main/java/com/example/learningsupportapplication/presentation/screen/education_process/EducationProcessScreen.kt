@@ -4,10 +4,14 @@ package com.example.learningsupportapplication.presentation.screen.education_pro
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -21,6 +25,7 @@ import com.example.learningsupportapplication.presentation.components.DraggableC
 import com.example.learningsupportapplication.presentation.screen.education_process.card_screen.PageOneContent
 import com.example.learningsupportapplication.presentation.screen.education_process.card_screen.PageTwoContent
 import com.example.learningsupportapplication.ui.theme.DarkGray
+import com.example.learningsupportapplication.ui.theme.SMALL_PADDING
 import com.example.util.LearningCardState
 import com.example.util.SwipeResult
 
@@ -70,20 +75,43 @@ fun EducationProcess(
             isListEmpty = isListEmpty,
             onSwiped = { swipeResult, _ ->
 
-                if (swipeResult == SwipeResult.REJECTED){
+                if (swipeResult == SwipeResult.ACCEPTED) {
                     goodAnswers++
-                }else{
+                } else {
                     badAnswers++
                 }
 
+                studyCards.value?.remove(studyCard)
+                learningCardState.value = LearningCardState.ON_QUESTION
+                if (studyCards.value?.isEmpty()?.or(false) == true) {
+                    isListEmpty.value = true
+                    studyCards.value?.removeAll(listOf(studyCard))
+                    openDialog.value = true
 
-                if (studyCards.value?.isNotEmpty()?.or(false) == true) {
-                    learningCardState.value = LearningCardState.ON_ANSWER
                 }
 
 
             },
             onNextClicked = {
+
+
+                if (studyCards.value?.isNotEmpty()?.or(false) == true) {
+                    learningCardState.value = LearningCardState.ON_ANSWER
+                }
+            },
+            onKnowClicked = {
+                goodAnswers++
+                studyCards.value?.remove(studyCard)
+                learningCardState.value = LearningCardState.ON_QUESTION
+                if (studyCards.value?.isEmpty()?.or(false) == true) {
+                    isListEmpty.value = true
+                    studyCards.value?.removeAll(listOf(studyCard))
+                    openDialog.value = true
+
+                }
+            },
+            onDontKnowClicked = {
+                badAnswers++
                 studyCards.value?.remove(studyCard)
                 learningCardState.value = LearningCardState.ON_QUESTION
                 if (studyCards.value?.isEmpty()?.or(false) == true) {
@@ -108,45 +136,90 @@ fun HandleEducationProcess(
     isListEmpty: MutableState<Boolean>,
     onSwiped: (Any, Any) -> Unit,
     onNextClicked: () -> Unit,
+    onKnowClicked: () -> Unit,
+    onDontKnowClicked: () -> Unit,
+
 
     ) {
     when (learningCardState) {
 
         LearningCardState.ON_QUESTION -> {
+
+            PageTwoContent(
+                studyCard = studyCard,
+                text = studyCard.firstPage,
+                onClicked = onNextClicked
+            )
+        }
+
+        LearningCardState.ON_ANSWER -> {
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(DarkGray)
 
             ) {
-                DraggableCard(
-                    item = studyCard,
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.LightGray)
-                        .padding(
-                            top = 16.dp,
-                            bottom = 16.dp,
-                            start = 16.dp,
-                            end = 16.dp
-                        ),
-                    onSwiped = { swipeResult, swipeCard ->
-                        onSwiped(swipeResult, swipeCard)
-                    },
-                    content = {
-                        PageOneContent(studyCard = studyCard, text = studyCard.firstPage)
-                    })
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    DraggableCard(
+                        item = studyCard,
+                        modifier = Modifier
+                            .weight(9f)
+                            .background(Color.LightGray)
+                            .padding(
+                                top = 16.dp,
+                                bottom = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            ),
+                        onSwiped = { swipeResult, swipeCard ->
+                            onSwiped(swipeResult, swipeCard)
+                        },
+                        content = {
+                            PageOneContent(studyCard = studyCard, text = studyCard.secondPage)
+                        })
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.LightGray)
+                            .weight(1f)
+                    ) {
+                        Button(modifier = Modifier
+                            .size(height = 40.dp, width = 140.dp),
+                            shape = RoundedCornerShape(SMALL_PADDING),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Red.copy(
+                                    alpha = 0.7f
+                                )
+                            ),
+                            onClick = { onDontKnowClicked() }
+                        ) {
+                            Text(text = "I don't know")
+                        }
+                        Button(modifier = Modifier
+                            .size(height = 40.dp, width = 140.dp),
+                            shape = RoundedCornerShape(SMALL_PADDING),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Green.copy(
+                                    alpha = 0.7f
+                                )
+                            ),
+                            onClick = { onKnowClicked() }
+                        ) {
+                            Text(text = "I know")
+                        }
+                    }
+                }
+
             }
 
 
-        }
-
-        LearningCardState.ON_ANSWER -> {
-            PageTwoContent(
-                studyCard = studyCard,
-                text = studyCard.secondPage,
-                onClicked = onNextClicked
-            )
         }
         else -> {}
 

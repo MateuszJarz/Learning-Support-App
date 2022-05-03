@@ -1,4 +1,6 @@
 package com.example.learningsupportapplication.presentation.components
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
@@ -15,6 +17,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.util.LearningCardState
 import com.example.util.SwipeResult
@@ -30,6 +33,7 @@ fun DraggableCard(
     content: @Composable () -> Unit
 ) {
 
+    val context = LocalContext.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     val swipeXLeft = -(screenWidth.value * 3.2).toFloat()
@@ -70,11 +74,11 @@ fun DraggableCard(
 
         val swipeResult = if (swipeX.value > 0){
             SwipeResult.ACCEPTED
-
+            Toast.makeText(context,"ACCEPTED",Toast.LENGTH_SHORT).show()
 
         } else{
             SwipeResult.REJECTED
-
+            Toast.makeText(context,"REJECTED",Toast.LENGTH_SHORT).show()
         }
         onSwiped(swipeResult, item)
     }

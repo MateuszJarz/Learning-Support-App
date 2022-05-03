@@ -16,6 +16,8 @@ Features in the future:
 - Improved statistics system
 
 ![Group 3](https://user-images.githubusercontent.com/62247805/166468243-5ba02cd6-b434-40ca-9e6d-d2a044003613.png)
-
+ 
+ In Learning view, you can answer by using the buttons or by dragging a card left or right
+ 
 ![2424](https://user-images.githubusercontent.com/62247805/166468259-eec82131-3653-468c-a2e1-4da7e85884b6.png)
 

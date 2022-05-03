@@ -6,13 +6,8 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -20,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.learningsupportapplication.domain.model.StudyCard
+import com.example.learningsupportapplication.navigation.Screen
+import com.example.learningsupportapplication.presentation.components.DisplayDialogAfterLearning
 import com.example.learningsupportapplication.presentation.components.DraggableCard
 import com.example.learningsupportapplication.presentation.screen.education_process.card_screen.PageOneContent
 import com.example.learningsupportapplication.presentation.screen.education_process.card_screen.PageTwoContent
 import com.example.learningsupportapplication.ui.theme.DarkGray
-import com.example.learningsupportapplication.ui.theme.cardItemBackgroundColor
 import com.example.util.LearningCardState
 import com.example.util.SwipeResult
 
@@ -44,6 +40,26 @@ fun EducationProcess(
 
     Log.d("learningCardState", learningCardState.value.name)
 
+    var goodAnswers by remember { mutableStateOf(0) }
+    var badAnswers by remember { mutableStateOf(0) }
+
+    val openDialog = remember { mutableStateOf(false) }
+
+    if (openDialog.value) {
+        DisplayDialogAfterLearning(
+
+            title = "WOW!",
+            message = "That's all for to day !",
+            goodAnswers = goodAnswers,
+            badAnswers = badAnswers,
+            openDialog = { openDialog.value = it },
+            closeDialog = {
+                navController.navigate(Screen.Home.route)
+                openDialog.value = false
+            }
+        )
+    }
+
 
     val isListEmpty = remember { mutableStateOf(false) }
 
@@ -54,13 +70,13 @@ fun EducationProcess(
             isListEmpty = isListEmpty,
             onSwiped = { swipeResult, _ ->
 
-
-                if (swipeResult == SwipeResult.ACCEPTED || swipeResult == SwipeResult.REJECTED) {
-                    if (studyCards.value?.isEmpty()?.or(false) == true) {
-                        isListEmpty.value = true
-                        studyCards.value?.removeAll(listOf(studyCard))
-                    }
+                if (swipeResult == SwipeResult.REJECTED){
+                    goodAnswers++
+                }else{
+                    badAnswers++
                 }
+
+
                 if (studyCards.value?.isNotEmpty()?.or(false) == true) {
                     learningCardState.value = LearningCardState.ON_ANSWER
                 }
@@ -73,6 +89,8 @@ fun EducationProcess(
                 if (studyCards.value?.isEmpty()?.or(false) == true) {
                     isListEmpty.value = true
                     studyCards.value?.removeAll(listOf(studyCard))
+                    openDialog.value = true
+
                 }
             }
 
@@ -96,14 +114,16 @@ fun HandleEducationProcess(
 
         LearningCardState.ON_QUESTION -> {
             Surface(
-                modifier = Modifier.fillMaxSize().background(DarkGray)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(DarkGray)
 
             ) {
                 DraggableCard(
                     item = studyCard,
                     modifier = Modifier
                         .fillMaxSize()
-                      .background(Color.LightGray)
+                        .background(Color.LightGray)
                         .padding(
                             top = 16.dp,
                             bottom = 16.dp,

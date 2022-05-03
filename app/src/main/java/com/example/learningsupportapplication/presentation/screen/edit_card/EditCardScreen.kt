@@ -1,5 +1,6 @@
 package com.example.learningsupportapplication.presentation.screen.edit_card
 
+import android.annotation.SuppressLint
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -25,23 +26,18 @@ import com.example.learningsupportapplication.presentation.common.StudyCardSheet
 import com.example.learningsupportapplication.presentation.screen.add_new_card.AddNewStudyCardViewModel
 import com.example.util.Constants
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun EditStudyCard(
     navController: NavHostController,
     editCardViewModel: EditCardViewModel = hiltViewModel()
 ) {
-    val studyCard by editCardViewModel.studyCard.collectAsState()
-
-    val id by editCardViewModel.id
-    val idStudyPackId by editCardViewModel.idStudyPack
-    val firstPage by editCardViewModel.firstPage
-    val secondPage by editCardViewModel.secondPage
-    val image by editCardViewModel.image
-
-
-
     val context = LocalContext.current
 
+    val studyCard = editCardViewModel.studyCard
+
+    var firstPage by editCardViewModel.firstPage
+    var secondPage by editCardViewModel.secondPage
     val bitmap = editCardViewModel.bitmap
     val imageUri = editCardViewModel.imageUri
 
@@ -72,7 +68,7 @@ fun EditStudyCard(
             }
 
         }else{
-            bitmap.value = studyCard.image
+            bitmap.value = studyCard.value.image
         }
 
 
@@ -85,13 +81,13 @@ fun EditStudyCard(
         StudyCardSheet(
 
             pageOneText = firstPage,
-            pageOneTextChange = {
-               editCardViewModel.firstPage.value = it
+            pageOneTextChange = {text1 ->
+                firstPage = text1
             },
 
             pageTwoText = secondPage,
-            pageTwoTextChange = {
-                editCardViewModel.secondPage.value = it
+            pageTwoTextChange = {text2 ->
+                secondPage = text2
             },
 
             bitmap = bitmap.value,

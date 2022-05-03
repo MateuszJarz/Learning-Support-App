@@ -24,14 +24,12 @@ class EditCardViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    val id: MutableState<Int> = mutableStateOf(0)
-    val idStudyPack: MutableState<Int> = mutableStateOf(0)
+
     val firstPage: MutableState<String> = mutableStateOf("")
     val secondPage: MutableState<String> = mutableStateOf("")
-    val image : MutableState<Bitmap?> = mutableStateOf(null)
 
-    private  var _studyCard: MutableStateFlow<StudyCard> =
-        MutableStateFlow(StudyCard(id = 0, 0, "", "", null))
+
+    private  var _studyCard =  MutableStateFlow<StudyCard>(StudyCard(id = 0, 0, "", "", null))
 
     var studyCard: StateFlow<StudyCard> = _studyCard
 
@@ -50,32 +48,15 @@ class EditCardViewModel @Inject constructor(
 
         }
     }
-    fun updateTaskFields(card: StudyCard) {
-        if (card != null) {
-            id.value = card.id
-            idStudyPack.value = card.idStudyPack
-            firstPage.value = card.firstPage
-            secondPage.value = card.secondPage
-            image.value = card.image
-        } else {
-            id.value = 0
-            idStudyPack.value = 0
-            firstPage.value = ""
-            secondPage.value = ""
-            image.value = null
-
-        }
-
-    }
 
     fun updateStudyCard() {
         viewModelScope.launch {
             val card = StudyCard(
-                id = id.value,
-                idStudyPack = idStudyPack.value,
+                id = studyCard.value.id,
+                idStudyPack = studyCard.value.idStudyPack,
                 firstPage = firstPage.value,
                 secondPage = secondPage.value,
-                image = image.value
+                image = bitmap.value
             )
 
             useCase.updateCard(studyCard = card)
